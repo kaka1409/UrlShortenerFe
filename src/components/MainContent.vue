@@ -1,0 +1,91 @@
+<script setup lang="ts">
+  import { LinkIcon  } from '@heroicons/vue/24/outline'
+  import { ArrowTopRightOnSquareIcon } from '@heroicons/vue/24/outline'
+
+  import InputField from './InputField.vue'
+  import Form from './Form.vue'
+
+  import { useUrlFormStore } from '@/stores/urlForm.store'
+  const urlFormStore = useUrlFormStore()
+</script>
+
+<template>
+  <main class="h-full w-full flex flex-col justify-center items-center gap-2">
+    <h1 class="text-5xl text-white font-bold">URL Shortener</h1>
+    <p class="text-white text-lg">Thank you for using our service, have a nice day!</p>
+
+    <Form v-if="!urlFormStore.isShortLinkCreated" method="post">
+      <div class="w-full">
+        <InputField
+          labelText="Shorten a long link:"
+          name="orginalUrl"
+          type="text"
+          v-model="urlFormStore.originalUrl"
+          placeholder="Paste your url here e.g: https://example.com/really-long-code"
+        />
+
+        <button
+          class="
+            w-full h-14 mt-4 bg-black-violet rounded-2xl text-white text-lg font-semibold
+            hover:cursor-pointer hover:opacity-60 transition-all duration-200"
+          @click="urlFormStore.createShortUrl"
+          :disabled="urlFormStore.originalUrl.length === 0"
+        >Get your shorten URL</button>
+      </div>
+    </Form>
+
+    <Form v-else>
+      <div class="w-full">
+        <InputField
+          labelText="Original URL:"
+          name="orginalUrl"
+          type="text"
+          :isDisabled="true"
+          v-model="urlFormStore.originalUrl"
+        />
+
+        <InputField
+          labelText="Shortened URL:"
+          name="orginalUrl"
+          type="text"
+          v-model="urlFormStore.shortenedUrl"
+          :isDisabled="true"
+        />
+
+        <div class="flex items-center justify-start gap-3">
+          <button
+            class="
+              flex items-center justify-between gap-1
+              px-3 py-2 border-2 border-gray-400 rounded-xl
+              hover:cursor-pointer hover:bg-black-violet/80 hover:text-white hover:border-black-violet/80
+              transition-all duration-200 "
+            @click="urlFormStore.copyToClipBoard"
+          >
+            <LinkIcon class="w-5 h-5"/>
+            <span>Copy</span>
+          </button>
+
+          <a
+            class="
+              flex items-center justify-between gap-1
+              px-3 py-2 border-2 border-gray-400 rounded-xl
+              hover:bg-black-violet/80 hover:text-white hover:border-black-violet/80
+              transition-all duration-200"
+            :href="urlFormStore.shortenedUrl"
+            target="_blank"
+          >
+            <ArrowTopRightOnSquareIcon class="w-5 h-5"/>
+            <span>Open</span>
+          </a>
+        </div>
+
+        <button
+          class="
+            w-full h-14 mt-4 bg-black-violet rounded-2xl text-white text-lg font-semibold
+            hover:cursor-pointer hover:opacity-60 transition-all duration-200"
+          @click="urlFormStore.resetFormState"
+        >Shorten another</button>
+      </div>
+    </Form>
+  </main>
+</template>

@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+
+/* :root {
+  --color-light-violet: #A855F7;
+  --color-black-violet: #1f0029;
+} */
+
+@theme {
+  --color-black-violet: #1f0029;
+  --color-light-violet: #A855F7;
+}
+
+/* Custom success toast */
+.white-success-toast {
+  background-color: white !important;
+  color: #4b0082 !important; /* Indigo/Purple text */
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  font-weight: 500;
+}
+
+/* Progress bar (success type only) */
+.white-success-toast .Vue-Toastification__progress-bar {
+  background-color: #800080 !important; /* Purple progress bar */
+}
+
