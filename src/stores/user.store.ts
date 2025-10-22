@@ -7,7 +7,7 @@ export const useUserStore = defineStore("user", {
   }),
 
   getters: {
-
+    avartarChar: (state) => state.email.charAt(0).toUpperCase(),
   },
 
   actions: {

@@ -17,8 +17,8 @@
   <RouterLink
     :to="props.destination"
     class="
-      absolute top-4 left-4 flex items-center justify-center gap-0.5
-      px-4 py-3 text-white font-sm text-xl rounded-full
+      absolute lg:top-4 lg:left-4 top-2 left-0 flex items-center justify-center gap-0.5
+      px-4 py-3 text-white font-sm lg:text-xl md:text-lg text-md rounded-full
       hover:cursor-pointer hover:bg-white/20 hover:text-gray transition-all duration-300
     "
   >

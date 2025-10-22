@@ -12,8 +12,8 @@
     <BackButton text="Back to home" />
     <h1 class="lg:text-5xl md:text-4xl sm:text-3xl text-white font-bold">SIGN UP</h1>
 
-    <Form method="post" :onSubmit="onSubmit">
-      <div class="w-full">
+    <Form method="post" :onSubmit="onSubmit" submitButtonText="Sign up">
+      <template v-slot:fieldsContainer>
         <InputField
           labelText="Email:"
           name="email"
@@ -48,22 +48,19 @@
           :errorMessage="errors.confirmPassword"
         />
 
-        <button
-          class="w-full h-14 mt-4 bg-black-violet rounded-2xl text-white text-lg font-semibold hover:cursor-pointer hover:opacity-60 transition-all duration-200"
-          type="submit"
-        >
-          Sign up
-        </button>
+      </template>
 
-        <div class="flex items-center justify-center gap-2 mt-4">
-          <span class="font-md">Already have an account?</span>
+      <template v-slot:formFooter>
+        <div class="flex items-center justify-center w-full gap-2 mt-4">
+          <span class="font-md lg:text-lg text-sm">Already have an account?</span>
           <RouterLink
-            to="/login"
-            class="text-black-violet font-bold text-md hover:cursor-pointer hover:opacity-60 transition-all duration-200"
-            >Login</RouterLink
-          >
+            to="/register"
+            class="
+              text-black-violet font-bold lg:text-lg sm:text-md text-sm
+              hover:cursor-pointer hover:opacity-40 transition-all duration-200"
+            >Login</RouterLink>
         </div>
-      </div>
+      </template>
     </Form>
   </section>
 </template>

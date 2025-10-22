@@ -7,7 +7,7 @@ const toast = useToast()
 
 // instance
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:5001/api/v1/',
+  baseURL: 'http://localhost:80/api/v1/',
   timeout: 5000,
   // withCredentials: true,
   headers: {
@@ -21,8 +21,8 @@ const okStatuses = [200, 201, 204]
 // request interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    const accessToken = useAuthStore().accessToken
-
+    const accessToken = useAuthStore()?.accessToken || ''
+    console.log(accessToken)
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`
     }
@@ -30,7 +30,7 @@ axiosInstance.interceptors.request.use(
   },
   async (error) => {
     const axiosError = await error
-    console.error(axiosError)
+    console.error("Error object:", axiosError)
     console.log(
       `ERROR_LOG:
       - ERROR_STATUS: ${axiosError.status}

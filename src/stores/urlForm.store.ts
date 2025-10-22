@@ -10,9 +10,7 @@ export const useUrlFormStore = defineStore("urlForm", {
     isShortLinkCreated: false,
   }),
 
-  getters: {
-
-  },
+  getters: {},
 
   actions: {
     resetFormState() {
@@ -32,16 +30,22 @@ export const useUrlFormStore = defineStore("urlForm", {
     },
 
     async createShortUrl() {
+      const originalUrl = this.originalUrl?.trim()
+      if (originalUrl.length === 0) {
+        toast.error('You cannot leave this field empty')
+        return
+      }
+
       const response = await axiosInstance.post("/urls", {
-        originalUrl: this.originalUrl,
+        originalUrl: originalUrl
       });
 
       if (response && response.data) {
         const responseBody = response.data.data
 
         this.isShortLinkCreated = true;
-        this.shortenedUrl = responseBody.fullUrl.trim() || ''
-        this.originalUrl = responseBody.originalUrl.trim() || ''
+        this.shortenedUrl = responseBody.fullUrl?.trim() || ''
+        this.originalUrl = responseBody.originalUrl?.trim() || ''
       }
     }
   }

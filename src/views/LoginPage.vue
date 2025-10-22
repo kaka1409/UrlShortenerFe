@@ -10,10 +10,10 @@
 <template>
   <section class="relative top-0 h-full w-full flex flex-col justify-center items-center gap-2">
     <BackButton text="Back to home" />
-    <h1 class="text-5xl text-white font-bold">LOGIN</h1>
+    <h1 class="lg:text-5xl md:text-4xl sm:text-3xl text-2xl text-white font-bold">LOGIN</h1>
 
-    <Form method="post" :onSubmit="onSubmit">
-      <div class="w-full">
+    <Form method="post" :onSubmit="onSubmit" submitButtonText="Login">
+      <template v-slot:fieldsContainer>
         <InputField
           labelText="Email:"
           name="email"
@@ -36,23 +36,19 @@
           :autoCorrect="false"
         />
 
-        <button
-          class="
-            w-full h-14 mt-4 bg-black-violet rounded-2xl text-white text-lg font-semibold
-            hover:cursor-pointer hover:opacity-60 transition-all duration-200"
-          type="submit"
-        >Login</button>
+      </template>
 
-        <div class="flex items-center justify-center gap-2 mt-4">
-          <span class="font-md">Don't have an account?</span>
+      <template v-slot:formFooter>
+        <div class="flex items-center justify-center w-full gap-2 mt-4">
+          <span class="font-md lg:text-lg text-sm">Don't have an account?</span>
           <RouterLink
             to="/register"
             class="
-              text-black-violet font-bold text-md
+              text-black-violet font-bold lg:text-md text-sm
               hover:cursor-pointer hover:opacity-40 transition-all duration-200"
             >Register</RouterLink>
         </div>
-      </div>
+      </template>
     </Form>
   </section>
 </template>

@@ -50,17 +50,17 @@
 </script>
 
 <template>
-  <div class="mb-4 text-black-violet/80">
+  <div class="w-full mb-4 text-black-violet/80">
     <label
-      class="float-left pl-1 lg:text-lg md:text-md sm:text-sm font-bold"
+      class="float-left pl-1 lg:text-lg md:text-md text-sm font-bold"
       :for="props.name"
     >{{ props.labelText }}</label>
 
     <input
       :class="
-        `w-full lg:h-14 md:h-12 sm:h-10 p-4 mt-2
-        border-2 border-gray-400 rounded-2xl
-        lg:text-lg md:text-md sm:text-sm text-black-violet/60
+        `w-full lg:h-14 md:h-12 h-10 lg:p-4 md:p-3 p-2 lg:mt-2
+        border-2 border-gray-400 lg:rounded-2xl md:rounded-xl sm:rounded-lg rounded-md
+        lg:text-lg md:text-md text-sm text-black-violet/60
         focus:outline-none focus:ring-2 ` +
         ( props.errorMessage ?
           'focus:ring-red-500 focus:border-red-500' :
@@ -76,6 +76,6 @@
       @input="onInput"
     />
 
-    <p class="text-red-500 text-sm h-2">{{ props.errorMessage }}</p>
+    <p class="text-red-500 lg:text-sm text-xs lg:h-2 md:h-2 h-3">{{ props.errorMessage }}</p>
   </div>
 </template>

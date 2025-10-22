@@ -11,11 +11,16 @@
 
 <template>
   <main class="h-full w-full flex flex-col justify-center items-center gap-2">
-    <h1 class="text-5xl text-white font-bold">URL Shortener</h1>
-    <p class="text-white text-lg">Thank you for using our service, have a nice day!</p>
+    <h1 class="lg:text-5xl md:text-4xl sm:text-3xl text-2xl text-white font-bold">URL Shortener</h1>
+    <p class="text-white lg:text-lg md:text-md sm:text-sm text-xs">Thank you for using our service, have a nice day!</p>
 
-    <Form v-if="!urlFormStore.isShortLinkCreated" method="post">
-      <div class="w-full">
+    <Form
+      v-if="!urlFormStore.isShortLinkCreated"
+      :onSubmit="urlFormStore.createShortUrl"
+      submitButtonText="Get your shorten URL"
+      method="post"
+    >
+      <template v-slot:fieldsContainer>
         <InputField
           labelText="Shorten a long link:"
           name="orginalUrl"
@@ -23,19 +28,11 @@
           v-model="urlFormStore.originalUrl"
           placeholder="Paste your url here e.g: https://example.com/really-long-code"
         />
-
-        <button
-          class="
-            w-full h-14 mt-4 bg-black-violet rounded-2xl text-white text-lg font-semibold
-            hover:cursor-pointer hover:opacity-60 transition-all duration-200"
-          @click="urlFormStore.createShortUrl"
-          :disabled="urlFormStore.originalUrl.length === 0"
-        >Get your shorten URL</button>
-      </div>
+      </template>
     </Form>
 
-    <Form v-else>
-      <div class="w-full">
+    <Form v-else submitButtonText="Shorten another" :onsubmit="urlFormStore.resetFormState">
+      <template v-slot:fieldsContainer>
         <InputField
           labelText="Original URL:"
           name="orginalUrl"
@@ -79,13 +76,13 @@
           </a>
         </div>
 
-        <button
+        <!-- <button
           class="
             w-full h-14 mt-4 bg-black-violet rounded-2xl text-white text-lg font-semibold
             hover:cursor-pointer hover:opacity-60 transition-all duration-200"
           @click="urlFormStore.resetFormState"
-        >Shorten another</button>
-      </div>
+        >Shorten another</button> -->
+      </template>
     </Form>
   </main>
 </template>

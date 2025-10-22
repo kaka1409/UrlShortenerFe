@@ -7,11 +7,12 @@ import router from '@/router'
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     accessToken: '',
+    refreshToken: '',
     loginData: {
       email: '',
       password: '',
     },
-    isLoginPasswordHidden:  true,
+    isLoginPasswordHidden: true,
     registerData: {
       email: '',
       password: '',
@@ -35,19 +36,20 @@ export const useAuthStore = defineStore('auth', {
       const userStore = useUserStore()
 
       const body = {
-        email: payload.email.trim() || this.loginData.email.trim(),
-        password: payload.password.trim() || this.loginData.password.trim()
+        email: payload.email?.trim() || this.loginData.email?.trim(),
+        password: payload.password?.trim() || this.loginData.password?.trim()
       }
 
       const response = await axiosInstance.post('/Auth/login', body)
 
       // Response valid
       if (response && response.data) {
-        const responseBody = response.data.data.token
+        const responseBody = response.data.data
 
-        this.accessToken = responseBody.token || ''
-        userStore.id = responseBody.user.id || ''
-        userStore.email = responseBody.user.email || ''
+        this.accessToken = responseBody?.accessToken?.trim() || ''
+        this.refreshToken = responseBody?.refreshToken?.trim() || ''
+        userStore.id = responseBody?.user?.id?.trim() || ''
+        userStore.email = responseBody?.user?.email?.trim() || ''
 
         router.push('/home')
       }
@@ -65,24 +67,23 @@ export const useAuthStore = defineStore('auth', {
       const userStore = useUserStore()
 
       const body = {
-        email: payload.email.trim() || this.registerData.email.trim(),
-        password: payload.password.trim() || this.registerData.password.trim(),
-        confirmPassword: payload.confirmPassword.trim() || this.registerData.confirmPassword.trim()
+        email: payload?.email?.trim() || this.registerData.email?.trim(),
+        password: payload?.password?.trim() || this.registerData.password?.trim(),
+        confirmPassword: payload?.confirmPassword?.trim() || this.registerData.confirmPassword?.trim()
       }
 
       const response = await axiosInstance.post('/Auth/register', body)
-      console.log(response)
+      // console.log(response)
 
       if (response && response.data) {
         const responseBody = response.data.data.token
 
-        this.accessToken = responseBody.token || ''
-        userStore.id = responseBody.user.id || ''
-        userStore.email = responseBody.user.email || ''
+        this.accessToken = responseBody?.token || ''
+        userStore.id = responseBody?.user?.id || ''
+        userStore.email = responseBody?.user?.email || ''
 
         router.push('/login')
       }
-
     },
 
     logout() {
