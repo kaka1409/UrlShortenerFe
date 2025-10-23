@@ -49,7 +49,7 @@ export const useAuthStore = defineStore('auth', {
         this.accessToken = responseBody?.accessToken?.trim() || ''
         this.refreshToken = responseBody?.refreshToken?.trim() || ''
         userStore.id = responseBody?.user?.id?.trim() || ''
-        userStore.email = responseBody?.user?.email?.trim() || ''
+        userStore.email = responseBody?.user?.email?.trim() || payload.email?.trim() || this.loginData.email?.trim() || ''
 
         router.push('/home')
       }
@@ -76,11 +76,12 @@ export const useAuthStore = defineStore('auth', {
       // console.log(response)
 
       if (response && response.data) {
-        const responseBody = response.data.data.token
+        const responseBody = response.data.data
 
-        this.accessToken = responseBody?.token || ''
-        userStore.id = responseBody?.user?.id || ''
-        userStore.email = responseBody?.user?.email || ''
+        this.accessToken = responseBody?.accessToken.trim() || ''
+        this.refreshToken = responseBody?.refreshToken.trim() || ''
+        userStore.id = responseBody?.user?.id.trim() || ''
+        userStore.email = responseBody?.user?.email.trim() || ''
 
         router.push('/login')
       }

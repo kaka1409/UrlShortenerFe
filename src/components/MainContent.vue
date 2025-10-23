@@ -75,13 +75,6 @@
             <span>Open</span>
           </a>
         </div>
-
-        <!-- <button
-          class="
-            w-full h-14 mt-4 bg-black-violet rounded-2xl text-white text-lg font-semibold
-            hover:cursor-pointer hover:opacity-60 transition-all duration-200"
-          @click="urlFormStore.resetFormState"
-        >Shorten another</button> -->
       </template>
     </Form>
   </main>

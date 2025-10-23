@@ -18,7 +18,10 @@ export const useUrlFormStore = defineStore("urlForm", {
       this.isShortLinkCreated = false
     },
 
-    async copyToClipBoard() {
+    async copyToClipBoard(e: Event) {
+      e.preventDefault()
+      e.stopPropagation()
+
       try {
         await navigator.clipboard.writeText(this.shortenedUrl);
         toast.success("Copied to clipboard", {

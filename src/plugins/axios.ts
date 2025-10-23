@@ -7,11 +7,11 @@ const toast = useToast()
 
 // instance
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:80/api/v1/',
+  baseURL: 'http://localhost/api/v1/',
   timeout: 5000,
-  // withCredentials: true,
+  withCredentials: true, // Allow cookies request
   headers: {
-    Accept: 'text/plain',
+    Accept: '*/*',
     'Content-Type': 'application/json',
   },
 })
@@ -22,7 +22,6 @@ const okStatuses = [200, 201, 204]
 axiosInstance.interceptors.request.use(
   (config) => {
     const accessToken = useAuthStore()?.accessToken || ''
-    console.log(accessToken)
     if (accessToken) {
       config.headers.Authorization = `Bearer ${accessToken}`
     }
@@ -30,7 +29,8 @@ axiosInstance.interceptors.request.use(
   },
   async (error) => {
     const axiosError = await error
-    console.error("Error object:", axiosError)
+    console.log('Error object: ')
+    console.log(axiosError)
     console.log(
       `ERROR_LOG:
       - ERROR_STATUS: ${axiosError.status}
@@ -49,18 +49,19 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     if (!okStatuses.includes(response.status)) {
-      toast.error(response?.data?.message || 'Something went wrong')
+      toast.error(response?.data?.message.trim() || 'Something went wrong')
       return Promise.reject(response)
     }
 
-    toast.success(response?.data?.message || 'Successful', {
+    toast.success(response?.data?.message.trim() || 'Successful', {
       toastClassName: 'white-success-toast',
     })
     return response
   },
   async (error) => {
     const axiosError = await error
-    console.error('Error object: ' + axiosError)
+    console.log('Error object: ')
+    console.log(axiosError)
     console.log(
       `ERROR_LOG:
       - ERROR_STATUS: ${axiosError.status}
@@ -73,8 +74,33 @@ axiosInstance.interceptors.response.use(
     const status = axiosError?.response?.status
     let message = axiosError?.response?.data?.error
 
-    if (status === 401) {
-      message = message || "You haven't logged in, please do it"
+    if (status === 401 && !axiosError.config._retry) {
+      axiosError.config._retry = true
+
+      const accessToken = useAuthStore().accessToken.trim()
+      // const refreshToken = useAuthStore().refreshToken.trim()
+
+      // console.log(accessToken)
+      // console.log(refreshToken)
+
+      if (accessToken === '') {
+        useAuthStore().setAccessToken('')
+        message = message || "You haven't logged in, please do it"
+        toast.error(message || 'Something went wrong')
+        return axiosError
+      }
+
+      if (accessToken) {
+        const response = await axios.post('http://localhost/api/v1/Auth/refresh', {}, { withCredentials: true })
+        const newAccessToken = response?.data?.accessToken.trim()
+
+        if (newAccessToken) {
+          useAuthStore().setAccessToken(newAccessToken)
+          axiosError.config.headers.Authorization = `Bearer ${newAccessToken}`
+        }
+        return axiosInstance(axiosError.config)
+        // return axiosError
+      }
     }
 
     toast.error(message || 'Something went wrong')
