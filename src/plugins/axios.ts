@@ -4,10 +4,12 @@ import { useAuthStore } from '@/stores/auth.store'
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
+const baseUrl = 'https://thang.tail704409.ts.net/api/v1/'
+// const baseUrl = 'http://localhost:80/api/v1/'
 
 // instance
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost/api/v1/',
+  baseURL: baseUrl,
   timeout: 5000,
   withCredentials: true, // Allow cookies request
   headers: {
@@ -91,7 +93,7 @@ axiosInstance.interceptors.response.use(
       }
 
       if (accessToken) {
-        const response = await axios.post('http://localhost/api/v1/Auth/refresh', {}, { withCredentials: true })
+        const response = await axios.post(baseUrl + 'Auth/refresh', {}, { withCredentials: true })
         const newAccessToken = response?.data?.accessToken.trim()
 
         if (newAccessToken) {
@@ -99,7 +101,6 @@ axiosInstance.interceptors.response.use(
           axiosError.config.headers.Authorization = `Bearer ${newAccessToken}`
         }
         return axiosInstance(axiosError.config)
-        // return axiosError
       }
     }
 

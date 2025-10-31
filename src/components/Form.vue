@@ -1,4 +1,10 @@
 <script setup lang="ts">
+  import { ref } from 'vue'
+  import { useToast } from 'vue-toastification'
+
+  const toast = useToast()
+  const isLoading = ref(false)
+
   const props = defineProps({
     method: {
       type: String,
@@ -15,7 +21,15 @@
   })
 
   async function handleSubmit(payload: SubmitEvent) {
-    await props.onSubmit(payload)
+    isLoading.value = true
+    try {
+      await props.onSubmit(payload)
+    } catch (error: any) {
+      console.error(error.message)
+      toast.error(error.message)
+    } finally {
+      isLoading.value = false
+    }
   }
 </script>
 
@@ -40,6 +54,7 @@
           lg:rounded-2xl rounded-lg text-white lg:text-lg text-md font-semibold
           hover:cursor-pointer hover:opacity-60 transition-all duration-200"
         type="submit"
+        :disabled="isLoading"
       >{{ props.submitButtonText }}</button>
       <slot name="formFooter"></slot>
     </form>

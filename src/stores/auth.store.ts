@@ -46,6 +46,8 @@ export const useAuthStore = defineStore('auth', {
       if (response && response.data) {
         const responseBody = response.data.data
 
+        // this.accessToken = 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJraGFuaHBocWdjczIzMDQ2MUBmcHQuZWR1LnZuIiwiaWF0IjoxNzUzMDgyMzUxLCJleHAiOjE3NTMwODU5NTF9.Rbavi5FVK4EjO_zHvLMOD4ME7ogoGTEuwhgM6TiLHH0'
+
         this.accessToken = responseBody?.accessToken?.trim() || ''
         this.refreshToken = responseBody?.refreshToken?.trim() || ''
         userStore.id = responseBody?.user?.id?.trim() || ''

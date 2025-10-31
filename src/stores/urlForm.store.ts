@@ -34,6 +34,7 @@ export const useUrlFormStore = defineStore("urlForm", {
 
     async createShortUrl() {
       const originalUrl = this.originalUrl?.trim()
+
       if (originalUrl.length === 0) {
         toast.error('You cannot leave this field empty')
         return

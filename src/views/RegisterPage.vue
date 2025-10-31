@@ -54,7 +54,7 @@
         <div class="flex items-center justify-center w-full gap-2 mt-4">
           <span class="font-md lg:text-lg text-sm">Already have an account?</span>
           <RouterLink
-            to="/register"
+            to="/login"
             class="
               text-black-violet font-bold lg:text-lg sm:text-md text-sm
               hover:cursor-pointer hover:opacity-40 transition-all duration-200"
