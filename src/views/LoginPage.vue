@@ -44,7 +44,7 @@
           <RouterLink
             to="/register"
             class="
-              text-black-violet font-bold lg:text-md text-sm
+              text-black-violet font-bold lg:text-lg sm:text-md text-sm
               hover:cursor-pointer hover:opacity-40 transition-all duration-200"
             >Register</RouterLink>
         </div>

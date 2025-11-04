@@ -4,12 +4,13 @@ import { useAuthStore } from '@/stores/auth.store'
 import { useToast } from 'vue-toastification'
 
 const toast = useToast()
-const baseUrl = 'https://thang.tail704409.ts.net/api/v1/'
-// const baseUrl = 'http://localhost:80/api/v1/'
+// const baseURL = 'https://urlshortener-api-5ts0.onrender.com/api/v1/'
+const baseURL = 'https://thang.tail704409.ts.net/api/v1/'
+// const baseURL = 'http://localhost:80/api/v1/'
 
 // instance
 const axiosInstance = axios.create({
-  baseURL: baseUrl,
+  baseURL: baseURL,
   timeout: 5000,
   withCredentials: true, // Allow cookies request
   headers: {
@@ -80,10 +81,6 @@ axiosInstance.interceptors.response.use(
       axiosError.config._retry = true
 
       const accessToken = useAuthStore().accessToken.trim()
-      // const refreshToken = useAuthStore().refreshToken.trim()
-
-      // console.log(accessToken)
-      // console.log(refreshToken)
 
       if (accessToken === '') {
         useAuthStore().setAccessToken('')
@@ -93,7 +90,7 @@ axiosInstance.interceptors.response.use(
       }
 
       if (accessToken) {
-        const response = await axios.post(baseUrl + 'Auth/refresh', {}, { withCredentials: true })
+        const response = await axios.post(baseURL + 'Auth/refresh', {}, { withCredentials: true })
         const newAccessToken = response?.data?.accessToken.trim()
 
         if (newAccessToken) {
