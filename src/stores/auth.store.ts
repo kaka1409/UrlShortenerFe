@@ -53,7 +53,7 @@ export const useAuthStore = defineStore('auth', {
         userStore.id = responseBody?.user?.id?.trim() || ''
         userStore.email = responseBody?.user?.email?.trim() || payload.email?.trim() || this.loginData.email?.trim() || ''
 
-        router.push('/home')
+        router.push('/')
       }
 
       // reset
