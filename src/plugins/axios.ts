@@ -1,4 +1,4 @@
-import axios, {type AxiosResponse } from 'axios'
+import axios, { type AxiosResponse } from 'axios'
 import { useAuthStore } from '@/stores/auth.store'
 
 import { useToast } from 'vue-toastification'

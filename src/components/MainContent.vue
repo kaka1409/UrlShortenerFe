@@ -1,12 +1,14 @@
 <script setup lang="ts">
-  import { LinkIcon  } from '@heroicons/vue/24/outline'
-  import { ArrowTopRightOnSquareIcon } from '@heroicons/vue/24/outline'
+import { LinkIcon } from '@heroicons/vue/24/outline'
+import { ArrowTopRightOnSquareIcon } from '@heroicons/vue/24/outline'
+// import QrCode from './QrCode.vue'
+import QrCode from '../components/QrCode.vue'
+// import QrCode from '@/components/QrCode.vue'
+import InputField from './InputField.vue'
+import Form from './Form.vue'
 
-  import InputField from './InputField.vue'
-  import Form from './Form.vue'
-
-  import { useUrlFormStore } from '@/stores/urlForm.store'
-  const urlFormStore = useUrlFormStore()
+import { useUrlFormStore } from '@/stores/urlForm.store'
+const urlFormStore = useUrlFormStore()
 </script>
 
 <template>
@@ -49,29 +51,25 @@
           :isDisabled="true"
         />
 
+        <div class="my-10 flex flex-col items-center justify-center">
+          <QrCode :url="urlFormStore.shortenedUrl" />
+        </div>
+
         <div class="flex items-center justify-start gap-3">
           <button
-            class="
-              flex items-center justify-between gap-1
-              px-3 py-2 border-2 border-gray-400 rounded-xl
-              hover:cursor-pointer hover:bg-black-violet/80 hover:text-white hover:border-black-violet/80
-              transition-all duration-200 "
+            class="flex items-center justify-between gap-1 px-3 py-2 border-2 border-gray-400 rounded-xl hover:cursor-pointer hover:bg-black-violet/80 hover:text-white hover:border-black-violet/80 transition-all duration-200"
             @click="urlFormStore.copyToClipBoard"
           >
-            <LinkIcon class="w-5 h-5"/>
+            <LinkIcon class="w-5 h-5" />
             <span>Copy</span>
           </button>
 
           <a
-            class="
-              flex items-center justify-between gap-1
-              px-3 py-2 border-2 border-gray-400 rounded-xl
-              hover:bg-black-violet/80 hover:text-white hover:border-black-violet/80
-              transition-all duration-200"
+            class="flex items-center justify-between gap-1 px-3 py-2 border-2 border-gray-400 rounded-xl hover:bg-black-violet/80 hover:text-white hover:border-black-violet/80 transition-all duration-200"
             :href="urlFormStore.shortenedUrl"
             target="_blank"
           >
-            <ArrowTopRightOnSquareIcon class="w-5 h-5"/>
+            <ArrowTopRightOnSquareIcon class="w-5 h-5" />
             <span>Open</span>
           </a>
         </div>
