@@ -10,7 +10,7 @@
 <template>
   <header
     class="
-      absolute top-0 w-full h-25 px-8 py-2
+      absolute z-0 top-0 w-full h-25 px-8 py-2
       text-xl text-white font-bold
       flex flex-wrap items-center lg:justify-between md:justify-between justify-around gap-4
       bg-gradient-to-b from-white/25 to-black-violet

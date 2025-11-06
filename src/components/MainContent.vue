@@ -11,8 +11,8 @@
 
 <template>
   <main class="h-full w-full flex flex-col justify-center items-center gap-2">
-    <h1 class="lg:text-5xl md:text-4xl sm:text-3xl text-2xl text-white font-bold">URL Shortener</h1>
-    <p class="text-white lg:text-lg md:text-md sm:text-sm text-xs">Thank you for using our service, have a nice day!</p>
+    <h1 class="relavtive z-10 lg:text-5xl md:text-4xl sm:text-3xl text-2xl text-white font-bold">URL Shortener</h1>
+    <p class="relavtive z-10 text-white lg:text-lg md:text-md sm:text-sm text-xs">Thank you for using our service, have a nice day!</p>
 
     <Form
       v-if="!urlFormStore.isShortLinkCreated"

@@ -11,6 +11,7 @@
     "build": "run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "build-only": "vite build",
+    "postbuild": "copyfiles dist/index.html dist/404.html",
     "type-check": "vue-tsc --build",
     "lint": "eslint . --fix",
     "format": "prettier --write src/"
@@ -35,6 +36,7 @@
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/tsconfig": "^0.8.1",
+    "copyfiles": "^2.4.1",
     "eslint": "^9.33.0",
     "eslint-plugin-vue": "~10.4.0",
     "jiti": "^2.5.1",
