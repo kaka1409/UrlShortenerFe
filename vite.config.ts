@@ -1,44 +1,41 @@
 import { fileURLToPath, URL } from 'node:url'
-
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-// import vueDevTools from 'vite-plugin-vue-devtools'
 import tailwindcss from "@tailwindcss/vite";
-import type { OutputBundle, NormalizedOutputOptions } from 'rollup'
+import type { NormalizedOutputOptions } from 'rollup'
+import fs from 'fs';
 
-// Fix 404 SPA bug of index.html not found
+
+// Tạo 404.html từ index.html khi build SPA
 function spaFallbackPlugin() {
   return {
     name: 'spa-fallback',
-    generateBundle(
-      _options: NormalizedOutputOptions,
-      bundle: OutputBundle
-    ) {
-      const indexHtml = bundle['index.html']
-      if (indexHtml) {
-        bundle['404.html'] = { ...indexHtml }
+    writeBundle(_options: NormalizedOutputOptions) {
+      const distPath = _options.dir || 'dist';
+      const indexFile = `${distPath}/index.html`;
+      const file404 = `${distPath}/404.html`;
+
+      if (fs.existsSync(indexFile)) {
+        fs.copyFileSync(indexFile, file404);
+        console.log('Copied index.html to 404.html');
       }
     },
   }
 }
 
-// https://vite.dev/config/
 export default defineConfig({
   base: '/UrlShortenerFe/',
   plugins: [
     vue(),
+    tailwindcss(),
     spaFallbackPlugin(),
-    // vueDevTools(),
-    tailwindcss()
   ],
-
   server: {
-    port: 3000
+    port: 3000,
   },
-
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
 })
