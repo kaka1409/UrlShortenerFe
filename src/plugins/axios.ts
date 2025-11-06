@@ -101,6 +101,10 @@ axiosInstance.interceptors.response.use(
       }
     }
 
+    if (message.includes('Email') && status === 500) {
+      message = message.split('|')[1]
+    }
+
     toast.error(message || 'Something went wrong')
     return axiosError
   },

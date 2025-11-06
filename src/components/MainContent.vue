@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { LinkIcon } from '@heroicons/vue/24/outline'
 import { ArrowTopRightOnSquareIcon } from '@heroicons/vue/24/outline'
-// import QrCode from './QrCode.vue'
-import QrCode from '../components/QrCode.vue'
+import { QrCodeIcon } from '@heroicons/vue/24/outline'
+
+// import QrCode from '../components/QrCode.vue'
 // import QrCode from '@/components/QrCode.vue'
+import QrCode from './QrCode.vue'
 import InputField from './InputField.vue'
 import Form from './Form.vue'
 
@@ -72,7 +74,16 @@ const urlFormStore = useUrlFormStore()
             <ArrowTopRightOnSquareIcon class="w-5 h-5" />
             <span>Open</span>
           </a>
+
+          <button
+            class="flex items-center justify-between gap-1 px-3 py-2 border-2 border-gray-400 rounded-xl hover:cursor-pointer hover:bg-black-violet/80 hover:text-white hover:border-black-violet/80 transition-all duration-200"
+            @click="urlFormStore.copyToClipBoard"
+          >
+            <QrCodeIcon class="w-5 h-5" />
+            <span>QR code</span>
+          </button>
         </div>
+
       </template>
     </Form>
   </main>
