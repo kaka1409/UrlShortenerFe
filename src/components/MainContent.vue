@@ -35,7 +35,10 @@ const urlFormStore = useUrlFormStore()
       </template>
     </Form>
 
-    <Form v-else submitButtonText="Shorten another" :onsubmit="urlFormStore.resetFormState">
+    <Form v-else
+      submitButtonText="Shorten another"
+      :onsubmit="urlFormStore.resetFormState"
+    >
       <template v-slot:fieldsContainer>
         <InputField
           labelText="Original URL:"
@@ -53,11 +56,14 @@ const urlFormStore = useUrlFormStore()
           :isDisabled="true"
         />
 
-        <div class="my-10 flex flex-col items-center justify-center">
+        <div
+          v-if="urlFormStore.isQrCodeCreated"
+          class="my-10 flex flex-col items-center justify-center w-full"
+        >
           <QrCode :url="urlFormStore.shortenedUrl" />
         </div>
 
-        <div class="flex items-center justify-start gap-3">
+        <div class="flex items-center justify-between w-full gap-3">
           <button
             class="flex items-center justify-between gap-1 px-3 py-2 border-2 border-gray-400 rounded-xl hover:cursor-pointer hover:bg-black-violet/80 hover:text-white hover:border-black-violet/80 transition-all duration-200"
             @click="urlFormStore.copyToClipBoard"
@@ -77,7 +83,7 @@ const urlFormStore = useUrlFormStore()
 
           <button
             class="flex items-center justify-between gap-1 px-3 py-2 border-2 border-gray-400 rounded-xl hover:cursor-pointer hover:bg-black-violet/80 hover:text-white hover:border-black-violet/80 transition-all duration-200"
-            @click="urlFormStore.copyToClipBoard"
+            @click="urlFormStore.displayGrCode"
           >
             <QrCodeIcon class="w-5 h-5" />
             <span>QR code</span>

@@ -6,7 +6,9 @@ import { useToast } from 'vue-toastification'
 const toast = useToast()
 // const baseURL = 'https://urlshortener-api-5ts0.onrender.com/api/v1/'
 const baseURL = 'https://thang.tail704409.ts.net/api/v1/'
+// const baseURL = 'https://lmt.tail3a7958.ts.net/api/v1/'
 // const baseURL = 'http://localhost:80/api/v1/'
+// const baseURL = 'http://localhost:5001/api/v1/'
 
 // instance
 const axiosInstance = axios.create({
@@ -101,7 +103,7 @@ axiosInstance.interceptors.response.use(
       }
     }
 
-    if (message.includes('Email') && status === 500) {
+    if (message?.includes('Email') && status === 500) {
       message = message.split('|')[1]
     }
 

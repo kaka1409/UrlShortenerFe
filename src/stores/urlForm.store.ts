@@ -8,6 +8,7 @@ export const useUrlFormStore = defineStore("urlForm", {
     originalUrl: '',
     shortenedUrl: '',
     isShortLinkCreated: false,
+    isQrCodeCreated: false
   }),
 
   getters: {},
@@ -30,6 +31,13 @@ export const useUrlFormStore = defineStore("urlForm", {
       } catch (err) {
         toast.error('Failed to copy link: ' + err);
       }
+    },
+
+    displayGrCode(e: Event) {
+      e.preventDefault()
+      e.stopPropagation()
+      
+      this.isQrCodeCreated = !this.isQrCodeCreated
     },
 
     async createShortUrl() {
